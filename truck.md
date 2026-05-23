@@ -1,5 +1,4 @@
-'''text
-'''mermaid
+```mermaid
 graph TD
     %% Setup Style
     classDef startEnd fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff;
