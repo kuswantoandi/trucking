@@ -1,17 +1,18 @@
 ```mermaid
 graph TD
+    %% Setup Style
     classDef online fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#fff;
     classDef offline fill:#e67e22,stroke:#d35400,stroke-width:2px,color:#fff;
     
-    Scan[Operator Melakukan Scan Barcode] --> CheckNet{Apakah Ada<br>Koneksi Internet?}
+    Scan[Operator Lapangan<br>Scan Barcode] --> CheckNet{Apakah Ada<br>Koneksi?}
     
-    CheckNet -- Ada / Online --> PostAPI[Kirim Data Langsung ke API NestJS]:::online
-    PostAPI --> UpdateDB[Database PostgreSQL Terupdate]
+    CheckNet -- Ya / Online --> PostAPI[Kirim Langsung<br>ke API NestJS]:::online
+    PostAPI --> UpdateDB[Database Postgres<br>Terupdate]
     
-    CheckNet -- Tidak / Offline --> SaveLocal[Simpan Data ke Local Cache DB<br>Isar / Hive / Drift]:::offline
-    SaveLocal --> Queue[Antrean Sinkronisasi Aktif]:::offline
+    CheckNet -- Tidak / Offline --> SaveLocal[Simpan ke Cache<br>Isar / Hive DB]:::offline
+    SaveLocal --> Queue[Antrean Sinkronisasi<br>Mulai Aktif]:::offline
     
-    Queue --> LoopCheck{Cek Koneksi Berkala...<br>Kembali Online?}
+    Queue --> LoopCheck{Cek Berkala:<br>Sinyal Kembali?}
     LoopCheck -- Belum --> Queue
-    LoopCheck -- Ya --> SyncData[Otomatis Sinkronisasi Data Antrean ke Server]:::online
+    LoopCheck -- Ya --> SyncData[Otomatis Sinkronisasi<br>Data ke Server]:::online
     SyncData --> UpdateDB
