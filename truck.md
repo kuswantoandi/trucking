@@ -6,11 +6,19 @@ graph TD
     classDef decision fill:#f1c40f,stroke:#f39c12,stroke-width:2px,color:#000;
     classDef alert fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff;
 
-    Start([Truck Tiba di<br>Pos Loading]) --> Scan1[1. Operator Scan<br>Barcode Truck]:::process
+    Start([Truck Tiba di<br>Pos Loading]) --> CheckFisik{Apakah Sticker<br>Barcode Bersih?}:::decision
     
-    Scan1 --> CheckActive{Apakah Barcode<br>& Supir Aktif?}:::decision
-    CheckActive -- Tidak --> AlertActive[Tolak Scan &<br>Perbaiki Master]:::alert
-    CheckActive -- Ya --> VerifyDriver{Verifikasi Foto<br>Supir Sesuai?}:::decision
+    CheckFisik -- Tidak/Kotor --> Clean[Supir/Operator<br>Bersihkan Sticker]:::process
+    Clean --> Scan1
+    
+    CheckFisik -- Ya/Bersih --> Scan1[1. Operator Scan<br>Sticker di Truck]:::process
+    
+    Scan1 --> CheckActive{Apakah Sticker<br>& Supir Aktif?}:::decision
+    
+    CheckActive -- Rusak/Tidak Aktif --> AlertActive[Gagal Scan:<br>Input Manual Darurat<br>/ Cetak Uang]:::alert
+    AlertActive --> VerifyDriver
+    
+    CheckActive -- Ya/Aktif --> VerifyDriver{Verifikasi Foto<br>Supir Sesuai?}:::decision
     
     VerifyDriver -- Tidak Sesuai --> AlertDriver[Ganti Supir /<br>Butuh Approval]:::alert
     AlertDriver --> VerifyDriver
@@ -38,7 +46,7 @@ graph TD
     CheckTime -- Tidak --> ArriveDest[4. Tiba di Tujuan]:::process
     ExceptionList --> ArriveDest
     
-    ArriveDest --> Scan3[Operator Checker<br>Scan Barcode]:::process
+    ArriveDest --> Scan3[Operator Checker<br>Scan Sticker Truck]:::process
     Scan3 --> StateDelivered[Status Ritase:<br>DELIVERED]:::process
     
     StateDelivered --> FinalizeFinance[Finalisasi Keuangan:<br>Profit = Rev - Cost]:::process
@@ -46,3 +54,4 @@ graph TD
     FinalizeFinance --> End([Selesai / Data<br>Masuk Dashboard]):::startEnd
 
     class Start,End startEnd;
+
