@@ -1,3 +1,4 @@
+```mermaid
 stateDiagram-v2
     [*] --> ARRIVED : Scan Kedatangan Verifikasi Supir dan Truck
     ARRIVED --> LOADED : Pengisian Pasir dan Input Tujuan Kunci Snapshot Harga
