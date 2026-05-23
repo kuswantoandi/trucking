@@ -1,7 +1,7 @@
 ```mermaid
 stateDiagram-v2
-    [*] --> ARRIVED : Scan Kedatangan Verifikasi Supir dan Truck
-    ARRIVED --> LOADED : Pengisian Pasir dan Input Tujuan Kunci Snapshot Harga
-    LOADED --> DEPARTED : Scan Keberangkatan dan Konfirmasi Penyerahan Uang Jalan
-    DEPARTED --> DELIVERED : Scan Konfirmasi Sampai di Tujuan Akhir
-    DELIVERED --> [*] : Profit Terfinalisasi dan Masuk Laporan Keuangan
+    [*] --> ARRIVED : Scan Kedatangan<br>Verifikasi Supir & Truck
+    ARRIVED --> LOADED : Muat Pasir & Input Tujuan<br>Kunci Snapshot Harga
+    LOADED --> DEPARTED : Scan Berangkat<br>Konfirmasi Uang Jalan
+    DEPARTED --> DELIVERED : Scan Checker Tujuan<br>Konfirmasi Sampai
+    DELIVERED --> [*] : Profit Terfinalisasi<br>& Masuk Cash Flow
